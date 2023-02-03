@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      #game-board {
+        width: 500px;
+        height: 500px;
+        border: 1px solid black;
+        position: relative;
+      }
+      .invader {
+        width: 50px;
+        height: 50px;
+        position: absolute;
+        background-color: red;
+      }
+      .player {
+        width: 50px;
+        height: 50px;
+        position: absolute;
+        bottom: 0;
+        background-color: blue;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="game-board">
+      <div class="invader"></div>
+      <div class="player"></div>
+    </div>
+    <script>
+      const gameBoard = document.querySelector("#game-board");
+      const invader = document.querySelector(".invader");
+      const player = document.querySelector(".player");
+      let playerLeft = gameBoard.offsetWidth / 2 - player.offsetWidth / 2;
+      player.style.left = playerLeft + "px";
+
+      function moveInvader() {
+        let invaderLeft = invader.offsetLeft + 10;
+        invader.style.left = invaderLeft + "px";
+
+        if (isCollision(invader, player)) {
+          alert("Collision detected!");
+        }
+      }
+      setInterval(moveInvader, 100);
+
+      function isCollision(a, b) {
+        let aRect = a.getBoundingClientRect();
+        let bRect = b.getBoundingClientRect();
+
+        return !(
+          aRect.bottom < bRect.top ||
+          aRect.top > bRect.bottom ||
+          aRect.right < bRect.left ||
+          aRect.left > bRect.right
+        );
+      }
+    </script>
+  </body>
+</html>
